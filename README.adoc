@@ -1,0 +1,61 @@
+:imagesdir: ./images
+= image:htmlsanitycheck-logo.png[HTML Sanity Checker]
+Dr. Gernot Starke <gernot.starke@innoq.com>
+v0.9, Sept-02-2014
+
+:plugin-url: https://github.com/aim42/htmlSanityCheck
+:plugin-issues: https://github.com/aim42/htmlSanityCheck/issues
+
+:project: htmlSanityCheck
+:project-url: https://github.com/aim42/htmlSanityCheck
+:project-issues: https://github.com/aim42/htmlSanityCheck/issues
+:project-bugs: https://github.com/aim42/htmlSanityCheck/issues?q=is%3Aopen+is%3Aissue+label%3Abug
+
+:asciidoc-url: http://asciidoctor.org
+
+
+
+== About
+kbd:[HtmlSC] can perform various content and semantic checks on HTML files,
+e.g. check for missing images, broken internal links, duplicate targets etc.
+
+It can be helpful in case of html generated from e.g. {asciidoc-url}[Asciidoctor],
+Markdown or other formats - as converters usually don't check for missing images
+or broken links.
+
+It can be used as Gradle plugin or as standalone Java/Groovy app. A simple UI
+is planned for a future release.
+
+
+image::htmlsanitycheck-overview.png["Overview", title="Overview"]
+
+
+It is open source and provides the following kinds of documentation:
+
+[cols="1,4"]
+|===
+| link:DevelopmentGuide.html[Development Guide]
+| Info for software developers,
+  setup of development environment,
+  building kbd:[HtmlSC] and its documentation.
+
+| link:hsc_arc42.html[Architecture Documentation] 
+| http://github.com/arc42[arc42]-based documentation,
+  with requirements, quality-goals,
+  context, building-blocks and
+  concepts. Created as an example
+  for http://arc42.de[arc42].
+
+| User Guide
+| (planned) intended for writers and authors, explains
+  how to check your (generated) html
+|===
+
+The {project-url}[repository is located on Github].
+
+
+
+Status:
+image:http://img.shields.io/:license-ccsa4-green.svg[link="https://creativecommons.org/licenses/by-sa/4.0/"^]
+image:https://badge.waffle.io/aim42/{project}.png?label=bug&title=bugs[link={project-bugs}]
+image:http://img.shields.io/github/issues/aim42/htmlsanitycheck.svg[issues]
