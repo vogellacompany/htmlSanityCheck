@@ -410,8 +410,60 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
-<body class="book">
+<body class="book toc2 toc-left">
 <div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_html_sanity_checker_architecture_documentation">HTML Sanity Checker Architecture Documentation</a>
+<ul class="sectlevel1">
+<li><a href="#_goals_of_this_documentation">Goals of this Documentation</a>
+<ul class="sectlevel2">
+<li><a href="#_disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+<li><a href="#_introduction_and_goals">1. Introduction and Goals</a>
+<ul class="sectlevel2">
+<li><a href="#requirements">1.1. Requirements Overview</a></li>
+<li><a href="#quality-goals">1.2. Quality Goals</a></li>
+<li><a href="#_stakeholder">1.3. Stakeholder</a></li>
+</ul>
+</li>
+<li><a href="#_constraints">2. Constraints</a></li>
+<li><a href="#_context">3. Context</a>
+<ul class="sectlevel2">
+<li><a href="#_business_context">3.1. Business Context</a></li>
+<li><a href="#_deployment_context">3.2. Deployment Context</a></li>
+</ul>
+</li>
+<li><a href="#_solution_strategy">4. Solution Strategy</a></li>
+<li><a href="#_building_block_view">5. Building Block View</a>
+<ul class="sectlevel2">
+<li><a href="#_whitebox_htmlsanitychecker">5.1. Whitebox HtmlSanityChecker</a></li>
+<li><a href="#_building_blocks_level_2">5.2. Building Blocks - Level 2</a></li>
+</ul>
+</li>
+<li><a href="#_runtime_view">6. Runtime View</a></li>
+<li><a href="#deployment-view">7. Deployment View</a></li>
+<li><a href="#_technical_and_crosscutting_concepts">8. Technical and Crosscutting Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#gradle-plugin-concept">8.1. Gradle Plugin Concept and Development</a></li>
+<li><a href="#template-method">8.2. Flexible Checking Algorithms</a></li>
+<li><a href="#html-encapsulation">8.3. Encapsulate HTML Parsing</a></li>
+<li><a href="#reporting-concept">8.4. Flexible Reporting</a></li>
+</ul>
+</li>
+<li><a href="#_design_decisions">9. Design Decisions</a>
+<ul class="sectlevel2">
+<li><a href="#_checking_of_external_links_postponed">9.1. Checking of external links postponed</a></li>
+<li><a href="#_html_parsing_with_jsoup">9.2. HTML Parsing with jsoup</a></li>
+<li><a href="#_string_similarity_checking_with_a_href_http_wikipedia_org_wiki_jaro_e2_80_93winkler_distance_jaro_winkler_distance_a">9.3. String Similarity Checking with <a href="http://wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Jaro-Winkler-Distance</a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,7 +498,7 @@ completed and maintained by Ralf Müller and Gernot Starke.</span></p></td>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Version 0.9 of 2014-09-01</p>
+<p>Version 0.9 of 2014-09-03</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="http://img.shields.io/:license-ccsa4-green.svg" alt=":license-ccsa4-green" width="^"></a></span>
@@ -1536,7 +1588,7 @@ to a later release of <kbd>HtmlSC</kbd>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-09-01 19:20:27 MESZ
+Last updated 2014-09-03 22:29:55 MESZ
 </div>
 </div>
 </body>
