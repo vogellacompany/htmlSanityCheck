@@ -5,7 +5,6 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
-<meta name="author" content="Dr. Gernot Starke">
 <title>Documentation Overview</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
@@ -414,16 +413,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="book">
 <div id="header">
 <h1><span class="image"><img src="./images/htmlsanitycheck-logo.png" alt="HTML Sanity Checker"></span> Documentation Overview</h1>
-<div class="details">
-<span id="author" class="author">Dr. Gernot Starke</span><br>
-<span id="email" class="email"><a href="mailto:gernot.starke@innoq.com">gernot.starke@innoq.com</a></span><br>
-<span id="revnumber">version 0.9,</span>
-<span id="revdate">Sept-02-2014</span>
-</div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>Dr. Gernot Starke &lt;<a href="mailto:gernot.starke@innoq.com">gernot.starke@innoq.com</a>&gt;
+v0.9, Sept-02-2014</p>
+</div>
 <div class="paragraph">
 <p><strong>The Problem</strong>: Languages like AsciiDoc or Markdown allow for easy writing and
 hyperlinking. When they are transformed to HTML the <em>sanity</em> of links
@@ -443,32 +440,43 @@ and images is not checked - that&#8217;s where <kbd>HtmlSC</kbd> comes into play
 e.g. check for missing images, broken internal links, duplicate targets etc.</p>
 </div>
 <div class="paragraph">
-<p>It is open source software and provides the following kinds of documentation:</p>
+<p>It is open source software and provides documentation for the following
+types of stakeholders:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Stakeholder</th>
+<th class="tableblock halign-left valign-top">Documentation</th>
+<th class="tableblock halign-left valign-top">Content</th>
+</tr>
+</thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Asciidoc, Markdown etc. author</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Guide</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(planned) intended for writers and authors, explains
+  how to check your (generated) html</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="DevelopmentGuide.html">Development Guide</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Info for software developers,
-  setup of development environment,
+<td class="tableblock halign-left valign-top"><p class="tableblock">software developers,</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes development environment,
   building <kbd>HtmlSC</kbd> and its documentation.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">arc42-user, (methodical) software developer or architect</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="hsc_arc42.html">Architecture Documentation</a> </p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/arc42">arc42</a>-based documentation,
   with requirements, quality-goals,
   context, building-blocks and
   concepts. Created as an example
   for <a href="http://arc42.de">arc42</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User Guide</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(planned) intended for writers and authors, explains
-  how to check your (generated) html</p></td>
 </tr>
 </tbody>
 </table>
@@ -489,8 +497,7 @@ e.g. check for missing images, broken internal links, duplicate targets etc.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.9<br>
-Last updated 2014-09-03 07:07:21 MESZ
+Last updated 2014-10-25 20:55:31 MESZ
 </div>
 </div>
 </body>

@@ -410,9 +410,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
-<body class="book">
+<body class="book toc2 toc-right">
 <div id="header">
 <h1>Development Guide</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_prerequisites">Prerequisites</a>
+<ul class="sectlevel2">
+<li><a href="#_prerequisites_for_gradle_plugin_development">Prerequisites for Gradle Plugin Development</a></li>
+<li><a href="#_directory_structure_and_required_files">Directory Structure and Required Files</a></li>
+</ul>
+</li>
+<li><a href="#_notes_for_intellij_users">Notes for IntelliJ Users</a></li>
+<li><a href="#_building_the_plugin">Building the Plugin</a>
+<ul class="sectlevel2">
+<li><a href="#_uploading_to_public_archives">Uploading to Public Archives</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div class="sect1">
@@ -473,6 +490,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
+<h2 id="_notes_for_intellij_users"><a class="anchor" href="#_notes_for_intellij_users"></a>Notes for IntelliJ Users</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you work with IntelliJ, you should configure your run- and test configurations
+so that the working-directory is set to your current module - most easily done
+by making $MODULE_DIR$ your default.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/intellij-run-configuration.jpg" alt="intellij-run-configuration"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_building_the_plugin"><a class="anchor" href="#_building_the_plugin"></a>Building the Plugin</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -484,7 +514,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-09-01 22:59:29 MESZ
+Last updated 2014-09-21 15:48:02 MESZ
 </div>
 </div>
 </body>

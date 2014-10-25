@@ -424,7 +424,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_introduction_and_goals">1. Introduction and Goals</a>
 <ul class="sectlevel2">
-<li><a href="#requirements">1.1. Requirements Overview</a></li>
+<li><a href="#requirements">1.1. Requirements Overview</a>
+<ul class="sectlevel3">
+<li><a href="#_basic_usage">1.1.1. Basic Usage</a></li>
+<li><a href="#_terminology_what_can_go_wrong_in_html_files">1.1.2. Terminology: What Can Go Wrong in HTML Files?</a></li>
+<li><a href="#_general_functionality">1.1.3. General Functionality</a></li>
+<li><a href="#_types_of_sanity_checks">1.1.4. Types of Sanity Checks</a></li>
+<li><a href="#_reporting_and_output_requirements">1.1.5. Reporting and Output Requirements</a></li>
+</ul>
+</li>
 <li><a href="#quality-goals">1.2. Quality Goals</a></li>
 <li><a href="#_stakeholder">1.3. Stakeholder</a></li>
 </ul>
@@ -439,18 +447,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_solution_strategy">4. Solution Strategy</a></li>
 <li><a href="#_building_block_view">5. Building Block View</a>
 <ul class="sectlevel2">
-<li><a href="#_whitebox_htmlsanitychecker">5.1. Whitebox HtmlSanityChecker</a></li>
-<li><a href="#_building_blocks_level_2">5.2. Building Blocks - Level 2</a></li>
+<li><a href="#_whitebox_htmlsanitychecker">5.1. Whitebox HtmlSanityChecker</a>
+<ul class="sectlevel3">
+<li><a href="#checker_blackbox">5.1.1. <em>CheckerCore</em> (Blackbox)</a></li>
+</ul>
+</li>
+<li><a href="#_building_blocks_level_2">5.2. Building Blocks - Level 2</a>
+<ul class="sectlevel3">
+<li><a href="#__em_checkercore_em_whitebox">5.2.1. <em>CheckerCore</em> (Whitebox)</a></li>
+<li><a href="#_checker_and_xyzchecker_subclasses">5.2.2. Checker and xyzChecker Subclasses</a></li>
+</ul>
+</li>
+<li><a href="#_building_blocks_level_3">5.3. Building Blocks - Level 3</a>
+<ul class="sectlevel3">
+<li><a href="#_resultscollector_whitebox">5.3.1. ResultsCollector (Whitebox)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_runtime_view">6. Runtime View</a></li>
 <li><a href="#deployment-view">7. Deployment View</a></li>
 <li><a href="#_technical_and_crosscutting_concepts">8. Technical and Crosscutting Concepts</a>
 <ul class="sectlevel2">
-<li><a href="#gradle-plugin-concept">8.1. Gradle Plugin Concept and Development</a></li>
-<li><a href="#template-method">8.2. Flexible Checking Algorithms</a></li>
-<li><a href="#html-encapsulation">8.3. Encapsulate HTML Parsing</a></li>
-<li><a href="#reporting-concept">8.4. Flexible Reporting</a></li>
+<li><a href="#_html_checking_domain_model">8.1. HTML Checking Domain Model</a></li>
+<li><a href="#gradle-plugin-concept">8.2. Gradle Plugin Concept and Development</a>
+<ul class="sectlevel3">
+<li><a href="#_directory_structure_and_required_files">8.2.1. Directory Structure and Required Files</a></li>
+<li><a href="#_passing_parameters_from_buildfile_to_plugin">8.2.2. Passing Parameters From Buildfile to Plugin</a></li>
+<li><a href="#_building_the_plugin">8.2.3. Building the Plugin</a></li>
+<li><a href="#_uploading_to_public_archives">8.2.4. Uploading to Public Archives</a></li>
+<li><a href="#_further_information_on_creating_gradle_plugins">8.2.5. Further Information on Creating Gradle Plugins</a></li>
+</ul>
+</li>
+<li><a href="#template-method">8.3. Flexible Checking Algorithms</a>
+<ul class="sectlevel3">
+<li><a href="#_missingimagefileschecker">8.3.1. MissingImageFilesChecker</a></li>
+<li><a href="#_brokencrossreferenceschecker">8.3.2. BrokenCrossReferencesChecker</a></li>
+<li><a href="#_duplicatelinktargetschecker">8.3.3. DuplicateLinkTargetsChecker</a></li>
+<li><a href="#_missinglocalresourceschecker">8.3.4. MissingLocalResourcesChecker</a></li>
+<li><a href="#_brokenexternallinkschecker">8.3.5. BrokenExternalLinksChecker</a></li>
+</ul>
+</li>
+<li><a href="#html-encapsulation">8.4. Encapsulate HTML Parsing</a></li>
+<li><a href="#reporting-concept">8.5. Flexible Reporting</a></li>
+<li><a href="#_styling_the_reporting_output">8.6. Styling the Reporting Output</a>
+<ul class="sectlevel3">
+<li><a href="#_attributions">8.6.1. Attributions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_design_decisions">9. Design Decisions</a>
@@ -460,6 +504,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_string_similarity_checking_with_a_href_http_wikipedia_org_wiki_jaro_e2_80_93winkler_distance_jaro_winkler_distance_a">9.3. String Similarity Checking with <a href="http://wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Jaro-Winkler-Distance</a></a></li>
 </ul>
 </li>
+<li><a href="#_glossary">10. Glossary</a></li>
 </ul>
 </li>
 </ul>
@@ -498,7 +543,7 @@ completed and maintained by Ralf Müller and Gernot Starke.</span></p></td>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Version 0.9 of 2014-09-03</p>
+<p>Version 0.9 of 2014-10-25</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="http://img.shields.io/:license-ccsa4-green.svg" alt=":license-ccsa4-green" width="^"></a></span>
@@ -576,7 +621,7 @@ nor for any property or feature of the software described here.</p>
 <p><kbd>HtmlSC</kbd> performs various checks on the HTML and</p>
 </li>
 <li>
-<p>reports its results either on the console or as file.</p>
+<p>reports its results either on the console or as HTML report.</p>
 </li>
 </ol>
 </div>
@@ -585,7 +630,50 @@ nor for any property or feature of the software described here.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_general_functionality"><a class="anchor" href="#_general_functionality"></a>1.1.2. General Functionality</h4>
+<h4 id="_terminology_what_can_go_wrong_in_html_files"><a class="anchor" href="#_terminology_what_can_go_wrong_in_html_files"></a>1.1.2. Terminology: What Can Go Wrong in HTML Files?</h4>
+<div class="paragraph">
+<p>Apart from purely syntactical errors, many things can go wrong in html, especially with respect to
+hyperlinks, anchors and id&#8217;s - as those are often manually maintained.</p>
+</div>
+<div class="paragraph">
+<div class="title">Broken Cross References:: Cross-references (internal links) can be broken,</div>
+<p>e.g. due to missing or misspelled link-target.
+See <a href="#_brokencrossreferenceschecker">BrokenCrossReferencesChecker</a></p>
+</div>
+<div class="literalblock">
+<div class="title">Missing local resources: Referenced local resources (other than images) can be missing or misspelled.</div>
+<div class="content">
+<pre>See &lt;&lt;MissingLocalResourcesChecker&gt;&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Duplicate link targets: link-targets can occur several times with the same name - so the browser cannot know</div>
+<p>which is the desired target.
+  See <a href="#_duplicatelinktargetschecker">DuplicateLinkTargetsChecker</a>.</p>
+</div>
+<div class="literalblock">
+<div class="title">Illegal links:: The links (aka anchors or URIs) can contain illegal characters or violate HTML link syntax.</div>
+<div class="content">
+<pre>See &lt;&lt;IllegalLinkChecker</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Broken external links: External links can be broken due to myriads of reasons: misspelled, link-target currently offline,</div>
+<div class="content">
+<pre>illegal link syntax. See &lt;&lt;BrokenExternalLinksChecker&gt;&gt;.</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Missing Alt Attribute in Image Tags: Images missing an alt-attribute.</div>
+<p>Checking and reporting these errors and flaws is the central <em>business requirement</em> of <kbd>HtmlSC</kbd>.</p>
+</div>
+<div class="paragraph">
+<p>Important terms (<strong>domain terms</strong>) of html sanity checking is documented in a (small)
+<a href="#_html_checking_domain_model">domain model</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_general_functionality"><a class="anchor" href="#_general_functionality"></a>1.1.3. General Functionality</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. General Requirements</caption>
 <colgroup>
@@ -609,13 +697,13 @@ nor for any property or feature of the software described here.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">G-2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">command line usage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>HtmlSC</kbd> can be called from the command line with arguments and options</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://gradle.org/">Gradle</a>-plugin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>HtmlSC</kbd> can be run as <a href="http://gradle.org/">Gradle</a>-plugin.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">G-3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://gradle.org/">Gradle</a>-plugin</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>HtmlSC</kbd> can be run as <a href="http://gradle.org/">Gradle</a>-plugin.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">command line usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>HtmlSC</kbd> can be called from the command line with arguments and options</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">G-4</p></td>
@@ -628,11 +716,16 @@ nor for any property or feature of the software described here.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">all required dependencies shall be compliant
                                to the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-SA-4 licence</a>.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G-6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">available via public repositories, like bintray or jcenter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G-7</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_types_of_sanity_checks"><a class="anchor" href="#_types_of_sanity_checks"></a>1.1.3. Types of Sanity Checks</h4>
+<h4 id="_types_of_sanity_checks"><a class="anchor" href="#_types_of_sanity_checks"></a>1.1.4. Types of Sanity Checks</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. Required Checks</caption>
 <colgroup>
@@ -649,22 +742,52 @@ nor for any property or feature of the software described here.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="MissingImageFiles"></a> R-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">missing image files</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check all image tags wether the referenced
-                        image files exist</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check all image tags if the referenced
+                                  image files exist.
+                                  See <a href="#_missingimagefileschecker">MissingImageFilesChecker</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">R-2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">broken internal links</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check all internal links from anchor-tags (href="XYZ")
-                          wether the link targets "XYZ" are defined</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check all internal links from anchor-tags
+                                  (href="XYZ") if the link targets "XYZ" are defined.
+                                  See <a href="#_brokencrossreferenceschecker">BrokenCrossReferencesChecker</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="DuplicateLinkTargets"></a> R-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">missing local files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">either other html-files, pdf&#8217;s or similar.
+                                  See <a href="#_missinglocalresourceschecker">MissingLocalResourcesChecker</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">duplicate link targets</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check all bookmark definitions
-                            (&#8230;&#8203; id="XYZ") wether the id&#8217;s ("XYZ") are unique.</p></td>
+                                  (&#8230;&#8203; id="XYZ") whether the id&#8217;s ("XYZ") are unique.
+                                  See <a href="#_duplicatelinktargetschecker">DuplicateLinkTargetsChecker</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed links</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check all links for syntactical correctness</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">missing alt-attribute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">in image-tags.  See <a href="#MissingImgAltAttributeChecker">[MissingImgAltAttributeChecker]</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unused-images</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">check for files in image-directories that are not referenced by any
+                                  of the HTML files in this <em>run</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">illegal link targets</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks for malformed or illegal anchors (link targets).</p></td>
 </tr>
 </tbody>
 </table>
@@ -685,17 +808,11 @@ nor for any property or feature of the software described here.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Opt-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unused images</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check wether all images found in image
-                  director(y/ies) are referenced from the HTML.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Opt-2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">missing extern images</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">missing external images</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check externally referenced images for availability</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Opt-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Opt-2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">broken external links</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check external links for both syntax and availability</p></td>
 </tr>
@@ -703,7 +820,7 @@ nor for any property or feature of the software described here.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_reporting_and_output_requirements"><a class="anchor" href="#_reporting_and_output_requirements"></a>1.1.4. Reporting and Output Requirements</h4>
+<h4 id="_reporting_and_output_requirements"><a class="anchor" href="#_reporting_and_output_requirements"></a>1.1.5. Reporting and Output Requirements</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 4. Reporting Requirements</caption>
 <colgroup>
@@ -759,7 +876,7 @@ nor for any property or feature of the software described here.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Correctness</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Every broken internal link is found.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Every broken internal link (crossreference) is found.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
@@ -776,6 +893,17 @@ Gradle, command-line and a graphical client have to be supported.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Safety</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Content of the files to be checked is <em>never</em> altered.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Correctness</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Correctness of every checker is automatically tested for positive AND negative
+                            cases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Correctness</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Every reporting format is tested: Reports must exactly reflect checking results.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
@@ -803,6 +931,11 @@ Gradle, command-line and a graphical client have to be supported.</p></td>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation author</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">writes documentation with Html output</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wants to check that the resulting document contains good links, image references</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="arc42_user"></a> arc42 user</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">uses the arc42 template for architecture documentation</p></td>
@@ -995,7 +1128,21 @@ in the <a href="#gradle-plugin-concept">Gradle plugin concept</a>.</p>
 <dl>
 <dt class="hdlist1">Rationale</dt>
 <dd>
-<p><em>reasons for this structure</em></p>
+<p>We used <em>functional decomposition</em> to separate responsibilities:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#checker_blackbox">CheckerCore</a> shall encapsulate checking logic and Html parsing/processing.</p>
+</li>
+<li>
+<p>all kinds of outputs (console, html-file, graphical) shall be handled in a separate component
+(<code>Reporter</code>)</p>
+</li>
+<li>
+<p>Implementation of Gradle specific stuff shall be encapsulated.</p>
+</li>
+</ul>
+</div>
 </dd>
 <dt class="hdlist1">Contained Blackboxes</dt>
 </dl>
@@ -1027,7 +1174,7 @@ enabling arbitrary gradle builds to use <kbd>HtmlSC</kbd> functionality.</p></td
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reporter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">outputs the collected checking results to configurable
-destinations, e.g. StdOut or a html file.</p></td>
+destinations, e.g. StdOut or a Html file.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1139,7 +1286,20 @@ as described in the Gradle user guide.</p></td>
 <dl>
 <dt class="hdlist1">Rationale</dt>
 <dd>
-<p><em>reasons for this structure</em></p>
+<p>This structures follows a strictly functional decomposition:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>parsing and handling html input</p>
+</li>
+<li>
+<p>checking</p>
+</li>
+<li>
+<p>collecting checking results</p>
+</li>
+</ul>
+</div>
 </dd>
 <dt class="hdlist1">Contained Blackboxes</dt>
 </dl>
@@ -1162,8 +1322,9 @@ for all checking algorithms.</p></td>
 command-line interface.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ResultsCollector</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Collects all checking results.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#ResultsCollector">[ResultsCollector]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collects all checking results. Its interface <code>Results</code> is contained in the
+<a href="#ResultsCollector">whitebox description</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HtmlParser</p></td>
@@ -1178,6 +1339,137 @@ within the (parsed) html.</p></td>
 <div class="paragraph">
 <p>The abstract Checker provides a uniform interface (public void check())
 to different checking algorithms. It is based upon the <a href="#checking-concept">concept of extensible checking algorithms</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_blocks_level_3"><a class="anchor" href="#_building_blocks_level_3"></a>5.3. Building Blocks - Level 3</h3>
+<div class="sect3">
+<h4 id="_resultscollector_whitebox"><a class="anchor" href="#_resultscollector_whitebox"></a>5.3.1. ResultsCollector (Whitebox)</h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/ResultsCollector.png" alt="Whitebox">
+</div>
+<div class="title">Figure 5. Results Collector (Whitebox)</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Rationale</dt>
+<dd>
+<p>This structures follows the hierarchy of checks - namely managing results for:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>a number of pages/documents, containing:</p>
+</li>
+<li>
+<p>a single page, each containing many</p>
+</li>
+<li>
+<p>single checks within a page</p>
+</li>
+</ol>
+</div>
+</dd>
+<dt class="hdlist1">Contained Blackboxes</dt>
+</dl>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 13. ResultsCollector building blocks</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Per-Run Results</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">results for potentially many Html pages/documents.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single-Page-Results</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">results for a single page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single-Check-Results</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">results for a single type of check (e.g. missing-images check)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a single finding, (e.g. "image 'logo.png' misssing"). Can hold suggestions
+and (planned for future releases) the responsible html element.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_interface_code_results_code"><a class="anchor" href="#_interface_code_results_code"></a>Interface <code>Results</code></h5>
+<div class="paragraph">
+<p>The <code>Result</code> interface is used by all clients
+(especially <code>Reporter</code> subclasses, graphical and command-line
+clients) to access checking results. It consists of three distinct APIs for
+overall <code>RunResults</code>, single-page results (<code>PageResults</code>) and single-check results
+(<code>CheckResults</code>). See the interface definitions below - taken from the Groovy-sourcecode:</p>
+</div>
+<div class="listingblock">
+<div class="title">Interface RunResults</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">public interface RunResults {
+
+    // returns results for all pages which have been checked
+    public ArrayList&lt;SinglePageResults&gt; getResultsForAllPages()
+
+    // how many pages were checked in this run?
+    public int nrOfPagesChecked()
+
+    // how many checks were performed in all?
+    public int nrOfChecksPerformedOnAllPages()
+
+    // how many findings (errors and issues) were found in all?
+    public int nrOfFindingsOnAllPages()
+
+    // how long took checking (in milliseconds)?
+    public Long checkingTookHowManyMillis()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Interface PageResults</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">public interface PageResults {
+
+    // what's the title of this page?
+    public String getPageTitle()
+
+    // what's the filename and path?
+    public String getPageFileName()
+    public String getPageFilePath()
+
+        // how many items have been checked?
+    public int nrOfItemsCheckedOnPage()
+
+    // how many problems were found on this page?
+    public int nrOfFindingsOnPage()
+
+    // how many different checks have run on this page?
+    public int howManyCheckersHaveRun()
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Interface CheckResults</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">public interface CheckResults {
+
+    // return a description of what is checked
+    // (e.g. "Missing Images Checker" or "Broken Cross-References Checker"
+    public String description()
+
+    // returns all findings/problems found during this check
+    public  ArrayList&lt;Finding&gt; getFindings()
+
+    }</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1198,10 +1490,10 @@ to different checking algorithms. It is based upon the <a href="#checking-concep
 <div class="content">
 <img src="./images/hsc-deployment.png" alt="Deployment">
 </div>
-<div class="title">Figure 5. Deployment</div>
+<div class="title">Figure 6. Deployment</div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 13. Deployment</caption>
+<caption class="title">Table 14. Deployment</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1264,7 +1556,95 @@ called from the command line.</p>
 <h2 id="_technical_and_crosscutting_concepts"><a class="anchor" href="#_technical_and_crosscutting_concepts"></a>8. Technical and Crosscutting Concepts</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="gradle-plugin-concept"><a class="anchor" href="#gradle-plugin-concept"></a>8.1. Gradle Plugin Concept and Development</h3>
+<h3 id="_html_checking_domain_model"><a class="anchor" href="#_html_checking_domain_model"></a>8.1. HTML Checking Domain Model</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/HTML_Checking_Domain.png" alt="HTML Checking Domain Model">
+</div>
+<div class="title">Figure 7. HTML Checking Domain Model</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 15. Domain Model</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anchor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Html element to create &#8594;Links. Contain link-targets in the form <code>&lt;a href="link-target"&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cross reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link from one part of the document to another part within the same document.
+                       A special form of &#8594;internal-link, with a &#8594;link-target in the same document.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">external link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link to another page or resource at another domain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description of a problem found by one &#8594;Checker within the &#8594;Html Page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Html Element</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML pages (documents) are made up by HTML elements, .e.g. <code>&lt;a href="link target"&gt;</code>, <code>&lt;img src="image.png"&gt;</code> and others. See the <a href="http://www.w3schools.com/html/html_elements.asp">W3-Consortium</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML Page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A single chunk of HTML, mostly regarded as a single file. Shall comply
+					   to standard HTML syntax. Minimal requirement: Our HTML parser can successfully parse this page. Contains &#8594;Html Elements. Also called <em>html document</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifier for a specific part of a document, e.g. <code>&lt;h2 id="#someHeader"&gt;</code>.
+						Often used to describe &#8594;link targets.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">internal link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link to another section of the same page or to another page of the same domain.
+						Also called <em>local link</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any a reference in the &#8594;html page that lets you display or activate another
+                        part of this document (internal ink) or another document, image or resource
+                        (can be either &#8594;internal (local) or &#8594;external link).
+                        Every link leads from the <em>link source</em> to the <em>link target</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link Target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the target of any &#8594;link, e.g. heading or any other a part of
+					 a html document, any internal or external resource (identified by URI). Expressed by &#8594;id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local resource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local file, either other html files or other filetypes (e.g. pdf, docx)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run Result</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The overall results of checking a number of pages (at least one page).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single Page Result</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A collection of all checks of a single &#8594; HTML Page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Universal Resource Identifier. Defined in <a href="http://www.ietf.org/rfc/rfc2396.txt">RFC-2396</a>. The ultimate source of truth concerning link syntax and semantic.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="gradle-plugin-concept"><a class="anchor" href="#gradle-plugin-concept"></a>8.2. Gradle Plugin Concept and Development</h3>
 <div class="paragraph">
 <p>You should definitely read the original
 [Gradle User Guide] on custom plugin development.</p>
@@ -1285,7 +1665,7 @@ we implement a lean wrapper as described in the Gradle user guide.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_directory_structure_and_required_files"><a class="anchor" href="#_directory_structure_and_required_files"></a>8.1.1. Directory Structure and Required Files</h4>
+<h4 id="_directory_structure_and_required_files"><a class="anchor" href="#_directory_structure_and_required_files"></a>8.2.1. Directory Structure and Required Files</h4>
 <div class="listingblock">
 <div class="content">
 <pre>|-htmlSanityCheck
@@ -1329,18 +1709,32 @@ HtmlSanityCheckTask groovy files</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_building_the_plugin"><a class="anchor" href="#_building_the_plugin"></a>8.1.2. Building the Plugin</h4>
+<h4 id="_passing_parameters_from_buildfile_to_plugin"><a class="anchor" href="#_passing_parameters_from_buildfile_to_plugin"></a>8.2.2. Passing Parameters From Buildfile to Plugin</h4>
 <div class="paragraph">
-<p>The plugin code itself is built with gradle</p>
+<p>To be done</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_uploading_to_public_archives"><a class="anchor" href="#_uploading_to_public_archives"></a>8.1.3. Uploading to Public Archives</h4>
+<h4 id="_building_the_plugin"><a class="anchor" href="#_building_the_plugin"></a>8.2.3. Building the Plugin</h4>
+<div class="paragraph">
+<p>The plugin code itself is built with gradle.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_uploading_to_public_archives"><a class="anchor" href="#_uploading_to_public_archives"></a>8.2.4. Uploading to Public Archives</h4>
 
+</div>
+<div class="sect3">
+<h4 id="_further_information_on_creating_gradle_plugins"><a class="anchor" href="#_further_information_on_creating_gradle_plugins"></a>8.2.5. Further Information on Creating Gradle Plugins</h4>
+<div class="paragraph">
+<p>Although writing plugins is described in the Gradle user guide,
+a clearly explained sample is given in a
+<a href="http://code4reference.com/2012/08/gradle-custom-plugin-part-2/">Code4Reference</a> tutorial.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="template-method"><a class="anchor" href="#template-method"></a>8.2. Flexible Checking Algorithms</h3>
+<h3 id="template-method"><a class="anchor" href="#template-method"></a>8.3. Flexible Checking Algorithms</h3>
 <div class="paragraph">
 <p><kbd>HtmlSC</kbd> uses the {template-method-pattern} to enable flexible checking algorithms:</p>
 </div>
@@ -1379,10 +1773,10 @@ The Template Method defines a skeleton of an algorithm in an operation, and defe
 <div class="content">
 <img src="./images/template-method.png" alt="Template Method">
 </div>
-<div class="title">Figure 6. Template-Method Overview</div>
+<div class="title">Figure 8. Template-Method Overview</div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 14. Template Method</caption>
+<caption class="title">Table 16. Template Method</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1396,26 +1790,31 @@ The Template Method defines a skeleton of an algorithm in an operation, and defe
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Checker</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>abstract</em> base class, containing the template method plus an abstract method check()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>abstract</em> base class, containing the template method check()
+                                        plus the public method performCheck()</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_imagefileexistchecker">ImageFileExistChecker</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">checks if referenced images exist, relative to baseDirectory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#ImageFileExistChecker">[ImageFileExistChecker]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">checks if referenced local image files exist</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">InternalLinksChecker</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">checks if links referenced within the page exist</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_brokencrossreferenceschecker">BrokenCrossReferencesChecker</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">checks if cross references (links referenced within the page) exist</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DuplicateIdChecker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#DuplicateIdChecker">[DuplicateIdChecker]</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">checks if any id has multiple definitions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MissingAltTagsForImagesChecker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(planned) checks if there are image tags without alt-attributes.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_imagefileexistchecker"><a class="anchor" href="#_imagefileexistchecker"></a>8.2.1. ImageFileExistChecker</h4>
+<h4 id="_missingimagefileschecker"><a class="anchor" href="#_missingimagefileschecker"></a>8.3.1. MissingImageFilesChecker</h4>
 <div class="paragraph">
-<p><span class="small">Adresses requirement <a href="#MissingImageFiles">[MissingImageFiles]</a>.</span></p>
+<p><span class="small">Adresses requirement <a href="#_types_of_sanity_checks">R1</a>.</span></p>
 </div>
 <div class="paragraph">
 <p>The (little) problem with checking images is their path: Consider the following
@@ -1427,24 +1826,16 @@ HTML fragment (from the file testme.html:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This image file ("one-image.jpg") has to be located relative to the directory containing the corresponding HTML file, i.e.:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>/Users/gstarke/projects/htmlSanityChecker/test/testme.html</pre>
-</div>
+<p>This image file ("one-image.jpg") has to be located relative to the directory
+containing the corresponding HTML file.</p>
 </div>
 <div class="paragraph">
-<p>Therefore the expected local absolute path of the "one-image.jpg" would be:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>/Users/gstarke/projects/htmlSanityChecker/test/images/one-image.jpg</pre>
-</div>
+<p>Therefore the expected absolute path of the "one-image.jpg" has to be determined
+from the absolute path of the html file under test.</p>
 </div>
 <div class="paragraph">
-<p>We check for existing files using the usual Java api, but have to add the
-baseDir (directory prefix) to the image-src given in the HTML tag to get the absolutePathToImageFile:</p>
+<p>We check for existing files using the usual Java api, but have to do some
+<em>directory arithmetic</em> to get the absolutePathToImageFile:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1453,9 +1844,58 @@ baseDir (directory prefix) to the image-src given in the HTML tag to get the abs
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_brokencrossreferenceschecker"><a class="anchor" href="#_brokencrossreferenceschecker"></a>8.3.2. BrokenCrossReferencesChecker</h4>
+<div class="paragraph">
+<p><span class="small">Adresses requirement <a href="#_types_of_sanity_checks">R-2</a>.</span></p>
+</div>
+<div class="paragraph">
+<p>Cross references are document-internal links where the href="link-target" from the html anchor
+tag has no prefix like +http, https, ftp, telnet, mailto, file and such.</p>
+</div>
+<div class="paragraph">
+<p>Only links with prefix # shall be taken into account, e.g. &lt;a href="#internalLink"&gt;.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_duplicatelinktargetschecker"><a class="anchor" href="#_duplicatelinktargetschecker"></a>8.3.3. DuplicateLinkTargetsChecker</h4>
+<div class="paragraph">
+<p><span class="small">Adresses requirement <a href="#_types_of_sanity_checks">R-4</a>.</span></p>
+</div>
+<div class="paragraph">
+<p>Sections, especially headings, can be made link-targets by adding the id="#xyz" element,
+yielding for example html headings like the following example.</p>
+</div>
+<div class="paragraph">
+<p>Problems occur if the same link target is defined several times (also shown below).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">  &lt;h2 id="seealso"&gt;First Heading&lt;/h2&gt;
+  &lt;h2 id="seealso"&gt;Second Heading&lt;/h2&gt;
+  &lt;a href="#seealso"&gt;Duplicate definition - where shall I go now?&lt;/a&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_missinglocalresourceschecker"><a class="anchor" href="#_missinglocalresourceschecker"></a>8.3.4. MissingLocalResourcesChecker</h4>
+<div class="paragraph">
+<p><span class="small">Adresses requirement <a href="#_types_of_sanity_checks">R-3</a>.</span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_brokenexternallinkschecker"><a class="anchor" href="#_brokenexternallinkschecker"></a>8.3.5. BrokenExternalLinksChecker</h4>
+<div class="paragraph">
+<p><span class="small">Adresses requirement <a href="#_types_of_sanity_checks">R-9</a>.</span></p>
+</div>
+<div class="paragraph">
+<p>Problem here are networking issues, latency and http return codes. This checker is planned,
+but currently not implemented.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="html-encapsulation"><a class="anchor" href="#html-encapsulation"></a>8.3. Encapsulate HTML Parsing</h3>
+<h3 id="html-encapsulation"><a class="anchor" href="#html-encapsulation"></a>8.4. Encapsulate HTML Parsing</h3>
 <div class="paragraph">
 <p>We encapsulate the third-party HTML parser (<a href="http://jsoup.org" class="bare">http://jsoup.org</a>) in
 simple wrapper classes with interfaces specific to our different
@@ -1463,28 +1903,116 @@ checking algorithms.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="reporting-concept"><a class="anchor" href="#reporting-concept"></a>8.4. Flexible Reporting</h3>
+<h3 id="reporting-concept"><a class="anchor" href="#reporting-concept"></a>8.5. Flexible Reporting</h3>
 <div class="paragraph">
-<p><kbd>HtmlSC</kbd> allows for different output
-* formats (HTML and text) and
-* destinations (file and console)</p>
+<p><kbd>HtmlSC</kbd> allows for different output formats:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>formats (HTML and text) and</p>
+</li>
+<li>
+<p>destinations (file and console)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reporting subsystem uses the template method pattern to allow different output formats
+(e.g. Console and HTML). The overall structure of reports is always the same:</p>
 </div>
 <div class="paragraph">
 <p>Graphical clients can use the API of the reporting subsystem to display
 reports in arbitrary formats.</p>
 </div>
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p>The (generic and abstract) reporting is implemented in the abstract Reporter class
+as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">/**
+ * main entry point for reporting - to be called when a report is requested
+ * Uses template-method to delegate concrete implementations to subclasses
+*/
+    public void reportFindings() {
+        initReport()            <i class="conum" data-value="1"></i><b>(1)</b>
+        reportOverallSummary()  <i class="conum" data-value="2"></i><b>(2)</b>
+        reportAllPages()        <i class="conum" data-value="3"></i><b>(3)</b>
+        closeReport()           <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+//
+    private void reportAllPages() {
+        pageResults.each { pageResult -&gt;
+            reportPageSummary( pageResult ) <i class="conum" data-value="5"></i><b>(5)</b>
+            pageResult.singleCheckResults.each { resultForOneCheck -&gt;
+               reportSingleCheckSummary( resultForOneCheck )  <i class="conum" data-value="6"></i><b>(6)</b>
+               reportSingleCheckDetails( resultForOneCheck )  <i class="conum" data-value="7"></i><b>(7)</b>
+               reportPageFooter()                             <i class="conum" data-value="8"></i><b>(8)</b>
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-This section needs to be written.
-:numbered:
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>initialize the report, e.g. create and open the file, copy css-, javascript and image files.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>create the overall summary, with the overall success percentage and a list of all checked pages with their success rate.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>iterate over all pages</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>write report footer - in HTML report also create back-to-top-link</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>for a single page, report the nr of checks and problems plus the success rate</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>for every singleCheck on that page, report a summary and</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>all detailed findings for a singleCheck.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>for every checked page, create a footer, pagebreak or similar to graphically distringuish
+pages between each other.</td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_styling_the_reporting_output"><a class="anchor" href="#_styling_the_reporting_output"></a>8.6. Styling the Reporting Output</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The HtmlReporter explicitly generates css classes together with the html elements,
+based upon css styling re-used from the Gradle JUnit plugin.</p>
+</li>
+<li>
+<p>Stylesheets, a minimized version of JQuery javascript library plus some icons
+are copied at report-generation time from the jar-file to the report output directory.</p>
+</li>
+<li>
+<p>Styling the back-to-top arror/button is done as a combination of JavaScript plus some css styling, as described in <a href="http://www.webtipblog.com/adding-scroll-top-button-website/" class="bare">http://www.webtipblog.com/adding-scroll-top-button-website/</a>.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_attributions"><a class="anchor" href="#_attributions"></a>8.6.1. Attributions</h4>
+<div class="paragraph">
+<p>Credits for the arrow-icon <a href="https://www.iconfinder.com/icons/118743/arrow_up_icon" class="bare">https://www.iconfinder.com/icons/118743/arrow_up_icon</a></p>
+</div>
 </div>
 </div>
 </div>
@@ -1495,7 +2023,7 @@ This section needs to be written.
 <div class="sect2">
 <h3 id="_checking_of_external_links_postponed"><a class="anchor" href="#_checking_of_external_links_postponed"></a>9.1. Checking of external links postponed</h3>
 <div class="paragraph">
-<p>In the current Version 0.9.1 we won&#8217;t check external links.
+<p>In the current {revision} we won&#8217;t check external links.
 These checks have been postponed to later versions.</p>
 </div>
 </div>
@@ -1585,10 +2113,18 @@ to a later release of <kbd>HtmlSC</kbd>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_glossary"><a class="anchor" href="#_glossary"></a>10. Glossary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See the <a href="#_html_checking_domain_model">domain model</a> for explanations of important terms.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-09-03 22:29:55 MESZ
+Last updated 2014-10-25 21:09:05 MESZ
 </div>
 </div>
 </body>
